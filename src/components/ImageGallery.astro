@@ -1,0 +1,366 @@
+---
+interface Image {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  images: Image[];
+  galleryId?: string;
+}
+
+// Generate a unique ID for each gallery instance to prevent conflicts
+const { images, galleryId = `gallery-${Math.random().toString(36).substring(2, 9)}` } = Astro.props;
+---
+
+<div
+  class="gallery"
+  data-gallery-id={galleryId}
+>
+  {
+    images.map((image, index) => (
+      <a
+        href={`#${galleryId}-lightbox-${index + 1}`}
+        class="gallery-item"
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="thumb"
+          loading="lazy"
+        />
+        <div class="overlay">
+          <span class="view-icon">+</span>
+        </div>
+      </a>
+    ))
+  }
+</div>
+
+{
+  images.map((image, index) => (
+    <div
+      class="lightbox"
+      id={`${galleryId}-lightbox-${index + 1}`}
+      data-gallery-id={galleryId}
+    >
+      <div class="lightbox-content">
+        <button
+          class="close-btn"
+          aria-label="Close lightbox"
+        >
+          ×
+        </button>
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="lightbox-img"
+        />
+      </div>
+    </div>
+  ))
+}
+
+<style>
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .gallery-item {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 250px;
+    position: relative;
+  }
+
+  /* For single image galleries, make the image take appropriate width */
+  .gallery:has(.gallery-item:only-child) .gallery-item {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .gallery-item:hover {
+    box-shadow:
+      0 15px 30px rgba(0, 0, 0, 0.1),
+      0 8px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .thumb {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    cursor: pointer;
+    transition:
+      transform 0.5s ease,
+      filter 0.3s ease;
+  }
+
+  .gallery-item:hover .thumb {
+    transform: scale(1.05);
+    filter: brightness(0.7);
+  }
+
+  /* Overlay styling */
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-item:hover .overlay {
+    opacity: 1;
+  }
+
+  .view-icon {
+    color: white;
+    font-size: 2.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.7);
+    opacity: 0;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .gallery-item:hover .view-icon {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(5px);
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lightbox-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    border-radius: 50%;
+    transition:
+      background-color 0.2s,
+      transform 0.2s;
+  }
+
+  .close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+  }
+
+  /* Small screens adjustments */
+  @media (max-width: 640px) {
+    .gallery-item {
+      width: 100%;
+    }
+
+    .close-btn {
+      top: -2rem;
+      right: -0.5rem;
+      font-size: 1.75rem;
+    }
+
+    .lightbox {
+      padding: 0.5rem;
+    }
+  }
+
+  /* Medium screens */
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .gallery-item {
+      width: 220px;
+    }
+  }
+</style>
+
+<script>
+  function initializeLightboxes() {
+    // Find all galleries on the page
+    const galleries = document.querySelectorAll(".gallery");
+
+    galleries.forEach((gallery) => {
+      const galleryId = gallery.getAttribute("data-gallery-id");
+      if (!galleryId) return;
+
+      // Get elements for this specific gallery
+      const galleryLinks = gallery.querySelectorAll(".gallery-item");
+      const lightboxes = document.querySelectorAll(`.lightbox[data-gallery-id="${galleryId}"]`);
+      const closeButtons = document.querySelectorAll(
+        `.lightbox[data-gallery-id="${galleryId}"] .close-btn`
+      );
+
+      // Open lightbox when clicking thumbnail for this gallery only
+      galleryLinks.forEach((anchor) => {
+        anchor.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = anchor.getAttribute("href");
+          if (targetId) {
+            const targetLightbox = document.querySelector(targetId);
+            if (targetLightbox) {
+              targetLightbox.style.display = "flex";
+              document.body.style.overflow = "hidden"; // Prevent scrolling
+            }
+          }
+        });
+      });
+
+      // Close lightbox function
+      function closeLightbox(lightbox) {
+        if (!lightbox) return;
+        lightbox.style.display = "none";
+        document.body.style.overflow = ""; // Restore scrolling
+        window.history.pushState(
+          "",
+          document.title,
+          window.location.pathname + window.location.search
+        );
+      }
+
+      // Close on button click for this gallery
+      closeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const lightbox = btn.closest(".lightbox");
+          if (lightbox) closeLightbox(lightbox);
+        });
+      });
+
+      // Close on outside click for this gallery
+      lightboxes.forEach((lightbox) => {
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) {
+            closeLightbox(lightbox);
+          }
+        });
+      });
+
+      // Add keyboard navigation for this gallery's lightboxes
+      lightboxes.forEach((lightbox) => {
+        lightbox.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            closeLightbox(lightbox);
+          }
+
+          if (lightbox.style.display !== "flex") return;
+
+          const lightboxId = lightbox.id;
+          const currentIndex = parseInt(lightboxId.split("-").pop()) - 1;
+
+          // Handle arrow keys
+          if (e.key === "ArrowRight") {
+            const nextIndex = (currentIndex + 1) % lightboxes.length;
+            closeLightbox(lightbox);
+            lightboxes[nextIndex].style.display = "flex";
+          } else if (e.key === "ArrowLeft") {
+            const prevIndex = (currentIndex - 1 + lightboxes.length) % lightboxes.length;
+            closeLightbox(lightbox);
+            lightboxes[prevIndex].style.display = "flex";
+          }
+        });
+      });
+    });
+
+    // Global ESC key handler
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".lightbox").forEach((lb) => {
+          if (lb.style.display === "flex") {
+            lb.style.display = "none";
+            document.body.style.overflow = "";
+            window.history.pushState(
+              "",
+              document.title,
+              window.location.pathname + window.location.search
+            );
+          }
+        });
+      }
+    });
+
+    // Handle direct hash navigation
+    if (window.location.hash) {
+      const targetLightbox = document.querySelector(window.location.hash);
+      if (targetLightbox && targetLightbox.classList.contains("lightbox")) {
+        targetLightbox.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+    }
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener("DOMContentLoaded", initializeLightboxes);
+
+  // Re-initialize on Astro page transitions
+  document.addEventListener("astro:page-load", initializeLightboxes);
+</script>

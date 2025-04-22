@@ -1,0 +1,84 @@
+---
+const { images } = Astro.props;
+---
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+/>
+
+<style>
+  .swiper {
+    max-width: 100%;
+  }
+
+  .swiper-slide img {
+    border-radius: 1.5rem;
+    border: 1px solid var(--gray-800);
+    background: var(--gradient-subtle);
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+  }
+
+  /* Reduce arrow size */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--accent-dark);
+  }
+
+  /* Make arrows look cleaner */
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 22px;
+  }
+
+  :global(.swiper-pagination-bullet) {
+    background-color: var(--accent-dark) !important;
+    opacity: 0.4;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    transition: opacity 0.3s ease;
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    opacity: 1 !important;
+  }
+</style>
+
+<div class="swiper">
+  <div class="swiper-wrapper">
+    {
+      images.map((img, i) => (
+        <div
+          class="swiper-slide"
+        >
+          <img
+            src={img.src}
+            alt={img.alt || `Image ${i + 1}`}
+          />
+        </div>
+      ))
+    }
+  </div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+</div>
+
+<script type="module">
+  import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs";
+
+  new Swiper(".swiper", {
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    spaceBetween: 20,
+  });
+</script>
