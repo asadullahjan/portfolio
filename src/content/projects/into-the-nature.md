@@ -1,24 +1,25 @@
 ---
-title: "Into the Nature – 2D Platformer Game"
+title: "Into the Nature"
 description: "A p5.js-based side-scrolling platformer featuring sound effects, enemies, moving platforms, and parallax scrolling."
-publishDate: 2024-02-20
+order: 6
 tags: ["JavaScript", "p5.js", "Game", "Platformer"]
-img: ""
-img_alt: "Into the Nature game scene"
+img: /assets/into-the-nature/img1.png
+img_alt: Into the Nature game scene
 images:
-  - { src: "", alt: "" }
-  - { src: "", alt: "" }
+  - { src: /assets/into-the-nature/img1.png, alt: Into the Nature game scene }
+  - { src: /assets/into-the-nature/img2.png, alt: Into the Nature game scene }
+  - { src: /assets/into-the-nature/img3.png, alt: Into the Nature game scene }
 ---
 
-## Overview
+"Into the Nature" is a 2D platformer built with p5.js, featuring immersive sound design, smooth physics, and interactive enemies. The game blends nature-inspired visuals with realistic motion to deliver a rich, side-scrolling gameplay experience.
 
-"Into the Nature" is a 2D platformer developed using p5.js. This game includes environmental elements, realistic jumping physics, enemy interactions, and immersive sound effects to provide a fun and engaging gameplay experience.
+[🎮 Live Demo](https://asad-p5-platformer.netlify.app/)
 
 ## Key Features
 
-- Jump, fall, and collision mechanics with gravity
-- Enemies with movement and sound feedback
-- Moving and stationary platforms with realistic physics
-- Background parallax scrolling for depth
-- Clean, modular ES6 code with separate script files
-- Rain and ambient sound using `playMode('untilDone')`
+- Realistic jump, gravity, and collision mechanics
+- Animated enemies with responsive interactions
+- Moving and static platforms with smooth physics
+- Parallax-scrolling background for visual depth
+- Ambient sounds and weather effects
+- Clean ES6 modular codebase for scalability

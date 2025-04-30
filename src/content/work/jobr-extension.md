@@ -1,6 +1,6 @@
 ---
 title: Jobr Extension
-publishDate: 2024-06-01
+order: 0
 img: /assets/jobr-extension/jobr-extension-1.gif
 img_alt: Jobr extension for auto form filling image
 images:

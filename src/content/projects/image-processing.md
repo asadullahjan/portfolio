@@ -1,24 +1,26 @@
 ---
-title: "Image Processing with Filters and Face Detection"
+title: "Image Processor"
 description: "A creative web app that applies filters, detects faces, and supports real-time video manipulation using p5.js and pixel-level operations."
-publishDate: 2024-03-04
+order: 3
 tags: ["JavaScript", "p5.js", "Image Processing", "Face Detection"]
-img: ""
+img: /assets/image-processing/img1.png
 img_alt: "Image filter with face detection"
 images:
-  - { src: "", alt: "" }
-  - { src: "", alt: "" }
+  - { src: "/assets/image-processing/img1.png", alt: "Image filter with face detection" }
+  - { src: "/assets/image-processing/img2.png", alt: "Image filter with face detection" }
+  - { src: "/assets/image-processing/img3.png", alt: "Image filter with face detection" }
+  - { src: "/assets/image-processing/img4.png", alt: "Image filter with face detection" }
 ---
-
-## Overview
 
 A powerful real-time image processing tool using the p5.js library. The app supports face detection, filter overlays, movement detection, and sound interaction. Designed without third-party libraries to ensure custom functionality and performance optimization.
 
+[🎮 Live Demo](https://frabjous-frangollo-b186dc.netlify.app/)
+
 ## Key Features
 
-- Face detection with region-specific filter application
-- Real-time pixel manipulation using `get(x, y)` and `set(x, y)`
-- Snapshot functionality with filter preservation
-- Multiple filters including edge detection and pixelation
-- Oscillator-generated audio effects
-- Clean UI with labeled buttons and modular design
+- Detects faces and applies filters selectively to facial regions
+- Applies multiple real-time filters like edge detection, tint, and pixelation
+- Allows users to capture snapshots with filters intact
+- Includes interactive audio effects tied to visual interactions
+- Clean and user-friendly interface with clearly labeled controls
+- Modular design for easy maintenance and future upgrades

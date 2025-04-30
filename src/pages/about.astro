@@ -1,120 +1,168 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-import ContactCTA from '../components/ContactCTA.astro';
-import Hero from '../components/Hero.astro';
+import ContactCTA from "../components/ContactCTA.astro";
+import Hero from "../components/Hero.astro";
 ---
 
-<BaseLayout title="About | Jeanine White" description="About Jeanine White Lorem Ipsum">
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero
-				title="About"
-				tagline="Thanks for stopping by. Read below to learn more about myself and my background."
-			>
-				<img
-					width="1553"
-					height="873"
-					src="/assets/at-work.jpg"
-					alt="Jeanine White at work with a colleague"
-				/>
-			</Hero>
+<BaseLayout
+  title="About | Asadullah Jan"
+  description="About Asadullah Jan - Full-Stack Developer and Computer Science Student"
+>
+  <div class="stack gap-20">
+    <main class="wrapper about">
+      <Hero
+        title="About"
+        tagline="Thanks for stopping by. Read below to learn more about myself and my background."
+      >
+        <div class="img-container">
+          <img
+            width="100%"
+            height="100%"
+            src="/assets/portrait.jpeg"
+            alt="Asadullah Jan at work"
+          />
+        </div>
+      </Hero>
 
-			<section>
-				<h2 class="section-title">Background</h2>
-				<div class="content">
-					<p>
-						Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes people happy.
-						Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin nibh nisl condimentum
-						id venenatis a condimentum vitae. Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla
-						pharetra diam sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare.
-					</p>
-					<p>
-						Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget gravida cum sociis
-						natoque penatibus. Cras fermentum odio eu feugiat pretium nibh. Proin nibh nisl
-						condimentum id venenatis. Porta nibh venenatis cras sed felis eget velit. Id diam vel
-						quam elementum pulvinar etiam non.
-					</p>
-					<p>
-						Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut sem viverra aliquet
-						eget sit amet. Lacus luctus accumsan tortor posuere ac ut consequat semper viverra.
-						Viverra accumsan in nisl nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl
-						pretium fusce.
-					</p>
-				</div>
-			</section>
-			<section>
-				<h2 class="section-title">Education</h2>
-				<div class="content">
-					<p>Corporis voluptates tenetur laudantium.</p>
-				</div>
-			</section>
-			<section>
-				<h2 class="section-title">Skills</h2>
-				<div class="content">
-					<p>officia unde omnis</p>
-				</div>
-			</section>
-		</main>
+      <section>
+        <h2 class="section-title">Background</h2>
+        <div class="content">
+          <p>
+            I'm Asadullah Jan, a Full-Stack Developer based in Islamabad, Pakistan with 1.5 years of
+            hands-on experience building interactive web applications, browser extensions, and
+            automation tools using modern technologies like React, Node.js, and Next.js.
+          </p>
+          <p>
+            I specialize in delivering scalable features, integrating third-party APIs, and working
+            collaboratively in agile environments. I'm currently pursuing a BSc in Computer Science
+            at Goldsmiths, University of London while contributing to cutting-edge projects such as
+            an AI-driven job automation platform.
+          </p>
+          <p>
+            I'm fluent in English, Urdu/Hindi, and a native speaker of Pashto. Outside of coding, I
+            enjoy running, cycling, and playing video games.
+          </p>
+        </div>
+      </section>
 
-		<ContactCTA />
-	</div>
+      <section>
+        <h2 class="section-title">Education</h2>
+        <div class="content">
+          <p>
+            <strong>Goldsmiths, University of London</strong><br />
+            BSc Computer Science (2022–2026)<br />
+            Part-time remote study, balancing coursework with real-world software development.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Skills</h2>
+        <div class="content">
+          <p>
+            <strong>Frontend:</strong> React.js, React Native, Next.js, JavaScript, TypeScript, HTML,
+            CSS, Figma<br />
+            <strong>Backend:</strong> Node.js, MongoDB, Prisma, Firebase, Redis<br />
+            <strong>Tools & DevOps:</strong> Git, GitHub Actions, Docker, Puppeteer, Chrome Debugger
+            API<br />
+            <strong>Other:</strong> Python, Agile Methodologies, Brevo
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Contact</h2>
+        <div class="content">
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:asadullah.jan@outlook.com">asadullah.jan@outlook.com</a><br />
+            <strong>Phone:</strong> +92 (301) 5166679<br />
+            <strong>Location:</strong> Islamabad, Pakistan<br />
+            <strong>LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/asadullah-jan-b1949922b/"
+              >linkedin.com/in/asadullah</a
+            ><br />
+            <strong>GitHub:</strong>
+            <a href="https://github.com/asadullahjan">github.com/asadullah</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <ContactCTA />
+  </div>
 </BaseLayout>
 
 <style>
-	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 3.5rem;
-	}
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
 
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
+  .img-container {
+    height: 250px;
+  }
 
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
+  img {
+    margin-top: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+  }
 
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
-	}
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--gray-200);
+  }
 
-	.content {
-		grid-column: 2 / 4;
-	}
+  .section-title {
+    grid-column-start: 1;
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
 
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
+  .content {
+    grid-column: 2 / 4;
+  }
 
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
-	}
+  .content p {
+    margin-bottom: 15px;
+  }
 
-	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
 
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
 
-		section {
-			display: contents;
-			font-size: var(--text-lg);
-		}
-	}
+  @media (min-width: 50em) {
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 60% 1fr;
+    }
+
+    .about > :global(:first-child) {
+      grid-column-start: 2;
+    }
+
+    section {
+      display: contents;
+      font-size: var(--text-lg);
+    }
+
+    .img-container {
+      height: 400px;
+    }
+  }
 </style>

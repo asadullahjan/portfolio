@@ -1,6 +1,6 @@
 ---
 title: Prospr
-publishDate: 2024-4-22
+order: 3
 img: /assets/prospr/prospr-1.gif
 img_alt: A clean, interactive team scheduling dashboard
 description: |

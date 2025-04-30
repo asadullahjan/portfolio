@@ -13,8 +13,8 @@ const fetchProjects = async () => {
   const personal = await getCollection("projects");
 
   return {
-    work: work.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()),
-    personal: personal.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()),
+    work: work.sort((a, b) => a.data.order - b.data.order),
+    personal: personal.sort((a, b) => a.data.order - b.data.order),
   };
 };
 
