@@ -14,19 +14,34 @@ import PortfolioPreview from "../components/PortfolioPreview.astro";
 
 // Page section components
 import ContactCTA from "../components/ContactCTA.astro";
+import Share from "../components/Share.astro";
 import Skills from "../components/Skills.astro";
 
-// Content Fetching: List four most recent work projects
-const projects = (await getCollection("work"))
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4);
+// Content Fetching: List projects for display
+const fetchProjects = async () => {
+  const work = await getCollection("work");
+  const personal = await getCollection("projects");
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+  return {
+    work: work.sort((a, b) => a.data.order - b.data.order).slice(0, 4),
+    personal: personal.sort((a, b) => a.data.order - b.data.order).slice(0, 2),
+  };
+};
+
+const { work, personal } = await fetchProjects();
+
+// SEO metadata
+const pageTitle = "Asadullah Jan | Full-Stack Developer";
+const pageDescription =
+  "Portfolio of Asadullah Jan, a Full-Stack Developer specializing in React.js and Node.js web and mobile applications.";
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
   <div class="stack gap-20 lg:gap-48">
+    <!-- Hero Section -->
     <div class="wrapper stack gap-8 lg:gap-20">
       <header class="hero">
         <Hero
@@ -44,22 +59,25 @@ const projects = (await getCollection("work"))
           </div>
         </Hero>
 
-        <!-- Placeholder for optional profile image; replace with your image or remove -->
         <img
-          alt="Asadullah Jan"
+          alt="Asadullah Jan - Portrait Photo"
           width="480"
           height="620"
           src="/assets/portrait.jpeg"
+          loading="eager"
         />
       </header>
 
       <Skills />
     </div>
 
+    <!-- Main Content -->
     <main class="wrapper stack gap-20 lg:gap-48">
+      <!-- <div> -->
+      <!-- Recent Work Section -->
       <section class="section with-background with-cta">
         <header class="section-header stack gap-2 lg:gap-4">
-          <h3>Recent Work</h3>
+          <h2>Recent Work</h2>
           <p>
             Explore my recent work, including mobile apps, browser extensions, and full-stack
             applications.
@@ -69,7 +87,7 @@ const projects = (await getCollection("work"))
         <div class="gallery">
           <Grid variant="offset">
             {
-              projects.map((project) => (
+              work.map((project) => (
                 <li>
                   <PortfolioPreview project={project} />
                 </li>
@@ -80,7 +98,7 @@ const projects = (await getCollection("work"))
 
         <div class="cta">
           <CallToAction href="/work">
-            View More
+            View All Work
             <Icon
               icon="arrow-right"
               size="1.2em"
@@ -88,153 +106,205 @@ const projects = (await getCollection("work"))
           </CallToAction>
         </div>
       </section>
+
+      <!-- Share Section -->
+      <div class="share-overflow">
+        <Share />
+      </div>
+      <!-- </div> -->
+      <!-- <div> -->
+      <!-- Personal Projects Section -->
+      <section class="section with-background bg-variant with-cta">
+        <header class="section-header stack gap-2 lg:gap-4">
+          <h2>Personal Projects</h2>
+          <p>
+            Explore my personal projects, where I experiment with new technologies and creative
+            ideas.
+          </p>
+        </header>
+
+        <div class="gallery">
+          <Grid variant="offset">
+            {
+              personal.map((project) => (
+                <li>
+                  <PortfolioPreview project={project} />
+                </li>
+              ))
+            }
+          </Grid>
+        </div>
+
+        <div class="cta">
+          <CallToAction href="/projects">
+            View All Projects
+            <Icon
+              icon="arrow-right"
+              size="1.2em"
+            />
+          </CallToAction>
+        </div>
+      </section>
+      <!-- </div> -->
     </main>
 
+    <!-- Contact CTA -->
     <ContactCTA />
   </div>
-</BaseLayout>
 
-<style>
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .roles {
-    display: none;
-  }
-
-  .hero img {
-    aspect-ratio: 5 / 4;
-    object-fit: cover;
-    object-position: top;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-md);
-  }
-
-  @media (min-width: 50em) {
+  <style>
     .hero {
-      display: grid;
-      grid-template-columns: 6fr 4fr;
-      padding-inline: 2.5rem;
-      gap: 3.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
     }
 
     .roles {
-      margin-top: 0.5rem;
-      display: flex;
-      gap: 0.5rem;
+      display: none;
     }
 
     .hero img {
-      aspect-ratio: 3 / 4;
-      border-radius: 4.5rem;
+      aspect-ratio: 5 / 4;
       object-fit: cover;
+      object-position: top;
+      border-radius: 1.5rem;
+      box-shadow: var(--shadow-md);
     }
-  }
 
-  /* ====================================================== */
+    .share-overflow {
+      width: 100vw; /* Full viewport width */
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
 
-  .section {
-    display: grid;
-    gap: 2rem;
-  }
+      overflow-x: auto;
+    }
 
-  .with-background {
-    position: relative;
-  }
+    @media (min-width: 50em) {
+      .hero {
+        display: grid;
+        grid-template-columns: 6fr 4fr;
+        padding-inline: 2.5rem;
+        gap: 3.75rem;
+      }
 
-  .with-background::before {
-    --hero-bg: var(--bg-image-subtle-2);
+      .roles {
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+      }
 
-    content: "";
-    position: absolute;
-    pointer-events: none;
-    left: 50%;
-    width: 100vw;
-    aspect-ratio: calc(2.25 / var(--bg-scale));
-    top: 0;
-    transform: translateY(-75%) translateX(-50%);
-    background:
-      url("/assets/backgrounds/noise.png") top center/220px repeat,
-      var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-      var(--gray-999);
-    background-blend-mode: overlay, normal, normal, normal;
-    mix-blend-mode: var(--bg-blend-mode);
-    z-index: -1;
-  }
+      .hero img {
+        aspect-ratio: 3 / 4;
+        border-radius: 4.5rem;
+        object-fit: cover;
+      }
+    }
 
-  .with-background.bg-variant::before {
-    --hero-bg: var(--bg-image-subtle-1);
-  }
+    /* ====================================================== */
 
-  .section-header {
-    justify-self: center;
-    text-align: center;
-    max-width: 50ch;
-    font-size: var(--text-md);
-    color: var(--gray-300);
-  }
-
-  .section-header h3 {
-    font-size: var(--text-2xl);
-  }
-
-  @media (min-width: 50em) {
     .section {
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-areas: "header header header header" "gallery gallery gallery gallery";
-      gap: 5rem;
+      display: grid;
+      gap: 2rem;
     }
 
-    .section.with-cta {
-      grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
+    .with-background {
+      position: relative;
+    }
+
+    .with-background::before {
+      --hero-bg: var(--bg-image-subtle-2);
+
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      left: 50%;
+      width: 100vw;
+      aspect-ratio: calc(2.25 / var(--bg-scale));
+      top: 0;
+      transform: translateY(-75%) translateX(-50%);
+      background:
+        url("/assets/backgrounds/noise.png") top center/220px repeat,
+        var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
+        var(--gray-999);
+      background-blend-mode: overlay, normal, normal, normal;
+      mix-blend-mode: var(--bg-blend-mode);
+      z-index: -1;
+    }
+
+    .with-background.bg-variant::before {
+      --hero-bg: var(--bg-image-subtle-1);
     }
 
     .section-header {
-      grid-area: header;
-      font-size: var(--text-lg);
+      justify-self: center;
+      text-align: center;
+      max-width: 50ch;
+      font-size: var(--text-md);
+      color: var(--gray-300);
     }
 
-    .section-header h3 {
-      font-size: var(--text-4xl);
+    .section-header h2 {
+      font-size: var(--text-2xl);
     }
 
-    .with-cta .section-header {
-      justify-self: flex-start;
-      text-align: left;
+    @media (min-width: 50em) {
+      .section {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: "header header header header" "gallery gallery gallery gallery";
+        gap: 5rem;
+      }
+
+      .section.with-cta {
+        grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
+      }
+
+      .section-header {
+        grid-area: header;
+        font-size: var(--text-lg);
+      }
+
+      .section-header h2 {
+        font-size: var(--text-4xl);
+      }
+
+      .with-cta .section-header {
+        justify-self: flex-start;
+        text-align: left;
+      }
+
+      .gallery {
+        grid-area: gallery;
+      }
+
+      .cta {
+        grid-area: cta;
+      }
     }
 
-    .gallery {
-      grid-area: gallery;
-    }
+    /* ====================================================== */
 
-    .cta {
-      grid-area: cta;
-    }
-  }
-
-  /* ====================================================== */
-
-  .mention-card {
-    display: flex;
-    height: 7rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    color: var(--gray-300);
-    background: var(--gradient-subtle);
-    box-shadow: var(--shadow-sm);
-  }
-
-  @media (min-width: 50em) {
     .mention-card {
+      display: flex;
+      height: 7rem;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 1px solid var(--gray-800);
       border-radius: 1.5rem;
-      height: 9.5rem;
+      color: var(--gray-300);
+      background: var(--gradient-subtle);
+      box-shadow: var(--shadow-sm);
     }
-  }
-</style>
+
+    @media (min-width: 50em) {
+      .mention-card {
+        border-radius: 1.5rem;
+        height: 9.5rem;
+      }
+    }
+  </style>
+</BaseLayout>

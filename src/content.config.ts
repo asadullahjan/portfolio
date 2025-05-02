@@ -42,4 +42,14 @@ export const collections = {
 				.optional(),
 		}),
 	}),
+	about: defineCollection({
+		// New about collection - will contain only one file
+		loader: glob({ base: './src/content/about', pattern: '**/*.md' }),
+		schema: z.object({
+			title: z.string(),
+			description: z.string(),
+			img: z.string(),
+			img_alt: z.string().optional(),
+		}),
+	}),
 };

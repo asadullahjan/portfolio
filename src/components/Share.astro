@@ -1,0 +1,339 @@
+---
+import Icon from "./Icon.astro";
+
+const portfolioUrl = "https://quiet-phoenix-a6fa02.netlify.app/";
+const shareTitle = "Check out this amazing portfolio!";
+const shareText = "I found this impressive portfolio that I thought you might be interested in.";
+
+// List of social share options
+const socialShareOptions = [
+  {
+    name: "LinkedIn",
+    icon: "linkedin-logo",
+    getUrl: () =>
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(portfolioUrl)}`,
+  },
+  {
+    name: "Twitter",
+    icon: "twitter-logo",
+    getUrl: () =>
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(portfolioUrl)}&text=${encodeURIComponent(shareText)}`,
+  },
+  {
+    name: "Facebook",
+    icon: "facebook",
+    getUrl: () =>
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(portfolioUrl)}`,
+  },
+  {
+    name: "Email",
+    icon: "paper-plane-tilt",
+    getUrl: () =>
+      `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareText + "\n\n" + portfolioUrl)}`,
+  },
+];
+---
+
+<aside>
+  <div class="content-wrapper">
+    <header>
+      <h2>Share My Portfolio</h2>
+      <p>Found my work interesting? Share it with your network!</p>
+    </header>
+
+    <div class="share-options">
+      <div class="share-main">
+        <button
+          id="shareButton"
+          class="button"
+        >
+          <Icon
+            icon="paper-plane-tilt"
+            size="1.2em"
+          />
+          <span>Share</span>
+        </button>
+
+        <button
+          id="copyLinkButton"
+          class="button button-subtle"
+        >
+          <Icon
+            icon="copy"
+            size="1.2em"
+          />
+          <span>Copy Link</span>
+        </button>
+      </div>
+
+      <div class="social-links">
+        {
+          socialShareOptions.map((option) => (
+            <a
+              href={option.getUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-icon"
+              aria-label={`Share on ${option.name}`}
+            >
+              <Icon
+                icon={option.icon}
+                size="1.2em"
+              />
+            </a>
+          ))
+        }
+      </div>
+
+      <div
+        id="feedbackMessage"
+        class="feedback-message"
+      >
+        <Icon
+          icon="check"
+          size="1.2em"
+        />
+        <span id="feedbackText"></span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script>
+  // Web Share API implementation
+  const shareButton = document.getElementById("shareButton");
+  const copyLinkButton = document.getElementById("copyLinkButton");
+  const feedbackMessage = document.getElementById("feedbackMessage");
+  const feedbackText = document.getElementById("feedbackText");
+
+  if (shareButton) {
+    shareButton.addEventListener("click", async () => {
+      const shareData = {
+        title: "Check out this amazing portfolio!",
+        text: "I found this impressive portfolio that I thought you might be interested in.",
+        url: window.location.href,
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+          showFeedback("Successfully shared!");
+        } else {
+          // Fallback for browsers that don't support Web Share API
+          showFeedback("Your browser doesn't support sharing. Try copying the link instead.");
+        }
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    });
+  }
+
+  if (copyLinkButton) {
+    copyLinkButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        showFeedback("Link copied to clipboard!");
+      } catch (err) {
+        console.error("Failed to copy:", err);
+        showFeedback("Could not copy link. Please try again.");
+      }
+    });
+  }
+
+  function showFeedback(message) {
+    if (feedbackMessage && feedbackText) {
+      feedbackText.textContent = message;
+      feedbackMessage.classList.add("visible");
+
+      setTimeout(() => {
+        feedbackMessage.classList.remove("visible");
+      }, 3000);
+    }
+  }
+</script>
+
+<style>
+  aside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid var(--gray-800);
+    border-bottom: 1px solid var(--gray-800);
+    padding: 5rem 1.5rem;
+    background-color: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 65rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--gray-300);
+    font-size: var(--text-md);
+  }
+
+  .share-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 35rem;
+  }
+
+  .share-main {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999rem;
+    background-color: var(--accent-regular);
+    color: var(--accent-text-over);
+    font-size: var(--text-md);
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-md);
+    transition: var(--theme-transition);
+    min-width: 9rem;
+  }
+
+  .button:hover {
+    background-color: var(--accent-dark);
+  }
+
+  .button-subtle {
+    background-color: var(--gray-200);
+    color: var(--gray-999);
+  }
+
+  .button-subtle:hover {
+    background-color: var(--gray-300);
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 999rem;
+    background-color: var(--gray-200);
+    color: var(--gray-999);
+    box-shadow: var(--shadow-sm);
+    transition: var(--theme-transition);
+  }
+
+  .social-icon:hover {
+    background-color: var(--accent-regular);
+    color: var(--accent-text-over);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feedback-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--accent-regular);
+    font-weight: 500;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+    text-align: center;
+    margin-top: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .feedback-message.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media (min-width: 50em) {
+    aside {
+      padding: 7.5rem;
+    }
+
+    .content-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 4rem;
+      width: 100%;
+      max-width: none;
+    }
+
+    header {
+      text-align: left;
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: var(--text-3xl);
+    }
+
+    .share-options {
+      flex: 1;
+      align-items: flex-end;
+    }
+
+    .share-main {
+      justify-content: flex-end;
+    }
+
+    .feedback-message {
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 35em) {
+    .share-main {
+      flex-direction: column;
+      width: auto;
+    }
+
+    .button {
+      width: auto;
+      min-width: 11rem;
+    }
+  }
+</style>
