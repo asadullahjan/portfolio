@@ -4,7 +4,7 @@ order: 3
 img: /assets/prospr/prospr-1.gif
 img_alt: A clean, interactive team scheduling dashboard
 description: |
-  Prospr is a team scheduling platform designed to optimize team coordination and streamline scheduling workflows. I helped build the frontend, focusing on pixel-perfect design and animations, while enhancing team collaboration during development.
+  A sleek team scheduling platform where I contributed to the frontend, implementing responsive layouts from Figma designs and adding smooth GSAP animations to enhance the user experience.
 tags:
   - Frontend Development
   - Scheduling

@@ -29,7 +29,7 @@ images:
       alt: "A browser extension generating Coursera video summaries and saves it to Notion",
     }
 description: |
-  Browser extension that extracts Coursera video transcripts, summarizes them using Claude AI, and syncs the content to Notion using Firebase for user authentication.
+  A browser extension that extracts Coursera video transcripts, summarizes them using Claude AI, and syncs the notes to Notion. Supports multiple formats like bullet points, Q&A, and concept maps with Firebase auth and a personalized dashboard.
 tags:
   - Browser Extension
   - Notion API
