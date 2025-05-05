@@ -72,8 +72,7 @@ const pageDescription =
     </div>
 
     <!-- Main Content -->
-    <main class="wrapper stack gap-20 lg:gap-48">
-      <!-- <div> -->
+    <main class="wrapper main stack gap-20 lg:gap-48">
       <!-- Recent Work Section -->
       <section class="section with-background with-cta">
         <header class="section-header stack gap-2 lg:gap-4">
@@ -108,11 +107,10 @@ const pageDescription =
       </section>
 
       <!-- Share Section -->
-      <div class="share-overflow">
-        <Share />
-      </div>
-      <!-- </div> -->
-      <!-- <div> -->
+      <!-- <section class="box share-section"> -->
+      <Share />
+      <!-- </section> -->
+
       <!-- Personal Projects Section -->
       <section class="section with-background bg-variant with-cta">
         <header class="section-header stack gap-2 lg:gap-4">
@@ -145,7 +143,6 @@ const pageDescription =
           </CallToAction>
         </div>
       </section>
-      <!-- </div> -->
     </main>
 
     <!-- Contact CTA -->
@@ -172,15 +169,8 @@ const pageDescription =
       box-shadow: var(--shadow-md);
     }
 
-    .share-overflow {
-      width: 100vw; /* Full viewport width */
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-
-      overflow-x: auto;
+    .share-section {
+      width: 100%;
     }
 
     @media (min-width: 50em) {
@@ -197,6 +187,9 @@ const pageDescription =
         gap: 0.5rem;
       }
 
+      .main {
+        margin-bottom: 8rem;
+      }
       .hero img {
         aspect-ratio: 3 / 4;
         border-radius: 4.5rem;

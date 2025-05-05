@@ -34,70 +34,57 @@ const socialShareOptions = [
 ];
 ---
 
-<aside>
-  <div class="content-wrapper">
-    <header>
-      <h2>Share My Portfolio</h2>
-      <p>Found my work interesting? Share it with your network!</p>
-    </header>
+<section class="box content-wrapper">
+  <header>
+    <h2>Share My Portfolio</h2>
+    <p>Found my work interesting? Share it with your network!</p>
+  </header>
 
-    <div class="share-options">
-      <div class="share-main">
-        <button
-          id="shareButton"
-          class="button"
-        >
-          <Icon
-            icon="paper-plane-tilt"
-            size="1.2em"
-          />
-          <span>Share</span>
-        </button>
-
-        <button
-          id="copyLinkButton"
-          class="button button-subtle"
-        >
-          <Icon
-            icon="copy"
-            size="1.2em"
-          />
-          <span>Copy Link</span>
-        </button>
-      </div>
-
-      <div class="social-links">
-        {
-          socialShareOptions.map((option) => (
-            <a
-              href={option.getUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-icon"
-              aria-label={`Share on ${option.name}`}
-            >
-              <Icon
-                icon={option.icon}
-                size="1.2em"
-              />
-            </a>
-          ))
-        }
-      </div>
-
-      <div
-        id="feedbackMessage"
-        class="feedback-message"
+  <div class="share-options">
+    <div class="share-main">
+      <button
+        id="shareButton"
+        class="button"
       >
         <Icon
-          icon="check"
+          icon="paper-plane-tilt"
           size="1.2em"
         />
-        <span id="feedbackText"></span>
-      </div>
+        <span>Share</span>
+      </button>
+
+      <button
+        id="copyLinkButton"
+        class="button button-subtle"
+      >
+        <Icon
+          icon="copy"
+          size="1.2em"
+        />
+        <span>Copy Link</span>
+      </button>
+    </div>
+
+    <div class="social-links">
+      {
+        socialShareOptions.map((option) => (
+          <a
+            href={option.getUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-icon"
+            aria-label={`Share on ${option.name}`}
+          >
+            <Icon
+              icon={option.icon}
+              size="1.2em"
+            />
+          </a>
+        ))
+      }
     </div>
   </div>
-</aside>
+</section>
 
 <script>
   // Web Share API implementation
@@ -160,6 +147,14 @@ const socialShareOptions = [
     border-top: 1px solid var(--gray-800);
     border-bottom: 1px solid var(--gray-800);
     padding: 5rem 1.5rem;
+    background-color: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .box {
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
     background-color: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
   }
@@ -250,8 +245,8 @@ const socialShareOptions = [
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.7rem;
-    height: 2.7rem;
+    width: 2.4rem;
+    height: 2.4rem;
     border-radius: 999rem;
     background-color: var(--gray-200);
     color: var(--gray-999);
@@ -290,6 +285,11 @@ const socialShareOptions = [
   @media (min-width: 50em) {
     aside {
       padding: 7.5rem;
+    }
+
+    .box {
+      border-radius: 1.5rem;
+      padding: 5rem 3rem;
     }
 
     .content-wrapper {
