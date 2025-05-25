@@ -17,6 +17,8 @@ import ContactCTA from "../components/ContactCTA.astro";
 import Share from "../components/Share.astro";
 import Skills from "../components/Skills.astro";
 
+import AreYouABot from "../components/AreYouABot.astro";
+
 // Content Fetching: List projects for display
 const fetchProjects = async () => {
   const work = await getCollection("work");
@@ -147,6 +149,7 @@ const pageDescription =
 
     <!-- Contact CTA -->
     <ContactCTA />
+    <AreYouABot />
   </div>
 
   <style>
